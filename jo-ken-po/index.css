@@ -1,5 +1,5 @@
 #content{
-    width: 500px;
+    width: 400px;
     margin: auto;
     flex-direction: column;
     border: 1px solid gray;
@@ -85,9 +85,12 @@ body{
 }
 button{
     background-color: green;
+    color: #eee;
     font-family: 'Nunito';
     font-size: 20px;
     grid-area: button;
+    border: 1px solid black;
+    border-radius: 3px;
 }
 #escolha{
     width: max-content;
