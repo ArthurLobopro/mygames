@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>Jo-ken-po game</title>
+</head>
+<body>
+    <section>
+        <div id="placar">
+            Você <span id="player"></span> x <span id="bot"></span> Bot
+        </div>
+        <div id="content">
+            <div id="escolha">Escolha sua jogada:</div>
+            <div id="options">
+                <div class="circle" onclick="jogada('pedra')">
+                    <img src="midia/pedra.svg" alt="Pedra" title="Pedra">
+                </div>
+                <div class="circle" onclick="jogada('papel')">
+                    <img src="midia/papel.svg" alt="Papel" title="Papel">
+                </div>
+                <div class="circle" onclick="jogada('tesoura')">
+                    <img src="midia/tesoura.svg" alt="Tesoura" title="Tesoura">
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="index.js"></script>
+    <script>
+        const body = document.body
+        body.onload = () =>{
+            const largura = window.innerWidth
+            const altura = window.innerHeight
+            body.style.height=`${altura}px`
+            body.style.width=`${largura}px`
+            lercookie()
+        }
+        body.onresize = () =>{
+            const largura = window.innerWidth
+            const altura = window.innerHeight
+            body.style.height=`${altura}px`
+            body.style.width=`${largura}px`
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+#content{
+    width: 500px;
+    margin: auto;
+    flex-direction: column;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 20px 0;
+}
+#placar{
+    width: max-content;
+    margin: auto;
+    font-family: 'Nunito';
+    font-size: 40px;
+}
+body,#content,.img,.txt,.vs,.player,.pc{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+#options{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 300px;
+    margin-top: 20px;
+}
+#jokenpo-animation{
+    display: grid;
+    grid-template-columns: 120px 120px 120px;
+    grid-template-rows: 100px 50px;
+    width: 360px;
+    height: 150px;
+}
+#result{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.grid3{
+    display: grid;
+    /* grid-template-columns: auto 50px auto;
+    grid-template-rows: auto auto; */
+    grid-template:
+    'player player vs pc pc'
+    'result result result result result'
+    'button button button button button';
+}
+.player img{
+    width: 70px;
+    transform: rotate(90deg);
+}
+
+.vs{ grid-area: vs; }
+.player{ grid-area: player; }
+.pc{ grid-area: pc; }
+
+.result{
+    grid-area: result;
+    margin: auto;
+}
+.player,.pc{
+    margin: auto;
+    font-family: 'Nunito';
+}
+.pc img{
+    width: 70px;
+    transform: rotate(-90deg);
+}
+.circle{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #ddd;
+    border: 5px solid black;
+    cursor: pointer;
+    margin: auto;
+}
+.circle:hover{
+    background-color: #ccc;
+}
+button{
+    background-color: green;
+    font-family: 'Nunito';
+    font-size: 20px;
+    grid-area: button;
+}
+#escolha{
+    width: max-content;
+    font-size: 34px;
+    font-family: 'Nunito';
+    font-weight: 600;
+}
+.up{
+    width: 90px;
+    animation: up 1.5s;
+    margin: auto;
+}
+.show{
+    animation: show 2s;
+    margin: auto;
+    width: min-content;
+}
+.show,.vs,.msg{
+    font-family: 'Nunito';
+    font-size: 30px;
+}
+@font-face{
+    font-family: 'Nunito';
+    src: url('fontes/Nunito-SemiBold.ttf');
+    font-weight: 600;
+    font-style: normal;
+}
+@keyframes up {
+    from{
+        transform: translateY(50px);
+    }
+    to{
+        transform: translateY(0px);
+    }
+}
+@keyframes show{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
