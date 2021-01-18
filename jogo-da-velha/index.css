@@ -22,8 +22,13 @@
     justify-content: center;
     align-items: center;
 }
-.show{
-    animation: show 1.5s;
+.showx{
+    animation: showx 1.5s;
+}
+.showo{
+    animation: showo 4s;
+}
+.showo,.showx{
     margin: auto;
     width: min-content;
 }
@@ -33,7 +38,12 @@
     font-weight: 600;
     font-style: normal;
 }
-@keyframes show{
+@keyframes showx{
     from{opacity: 0;}
     to{opacity: 1;}
+}
+@keyframes showo{
+    0%{opacity: 0;}
+    50%{opacity: 0;}
+    100%{opacity: 1;}
 }
