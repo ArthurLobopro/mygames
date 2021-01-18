@@ -5,6 +5,7 @@ const game = {
         '','',''
     ],
 }
+const msg = document.getElementById('msg')
 let jogar = () => jogada(String(event.target.id)[3])
 function jogada(player,alerta=true) {
     if(game.status[player-1]==''){
@@ -66,11 +67,6 @@ function verifica() {
         win(sts[2],[3,5,7])
     }
 }
-function zera_status(){
-    for(i in game.status){
-        game.status[i]=''
-    }
-}
 let elemEvt
 function addEventAll(){
     elemEvt = []
@@ -90,7 +86,6 @@ function removeEventAll(){
     }
 }
 function win(winner,sequence){
-    const msg = document.getElementById('msg')
     if(winner=='x'){
         for( i of sequence){
             document.getElementById(`div${i}`).innerHTML=`<img src='midia/red-x.png'>`
@@ -103,5 +98,12 @@ function win(winner,sequence){
         msg.innerText='Você perdeu!'
     }
     removeEventAll()
+}
+function newgame(){
+    for(i=0;i<9;i++){
+        game.status[i]=''
+        document.getElementById(`div${i+1}`).innerHTML=''
+    }
+    msg.innerText=''
 }
 addEventAll()
