@@ -27,15 +27,15 @@
     justify-content: center;
     align-items: center;
 }
+.square img{
+    margin: auto;
+    width: max-content;
+}
 .showx{
     animation: showx 1.5s;
 }
 .showo{
     animation: showo 4s;
-}
-.showo,.showx{
-    margin: auto;
-    width: max-content;
 }
 @font-face{
     font-family: 'Nunito';
