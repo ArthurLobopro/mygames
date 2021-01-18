@@ -46,25 +46,33 @@ function draw(id,src) {
 }
 function verifica() {
     const sts = game.status
+    let have_winner = false
     for(i=0;i<7;i+=3){
         if(sts[i] == sts[i+1] && sts[i] == sts[i+2] && (sts[i]!='')){
             console.log('victory1')
             win(sts[i],[i+1,i+2,i+3])
+            have_winner=true
         }
     }
     for(i=0;i<3;i++){
         if(sts[i] == sts[i+3] && sts[i] == sts[i+6] && (sts[i]!='')){
             console.log('victory2')
             win(sts[i],[i+1,i+4,i+7])
+            have_winner=true
         }
     }
     if(sts[0] == sts[4] && sts[0] == sts[8] && (sts[0]!='')){
         console.log('victory3')
         win(sts[0],[1,5,9])
+        have_winner=true
     }
     if(sts[2] == sts[4] && sts[2] == sts[6] && (sts[2]!='')){
         console.log('victory4')
         win(sts[2],[3,5,7])
+        have_winner=true
+    }
+    if(game.status.indexOf('')==-1 && have_winner==false){
+        win()
     }
 }
 let elemEvt
@@ -85,17 +93,19 @@ function removeEventAll(){
         elemEvt.push(elem)
     }
 }
-function win(winner,sequence){
+function win(winner='en',sequence){
     if(winner=='x'){
         for( i of sequence){
             document.getElementById(`div${i}`).innerHTML=`<img src='midia/red-x.png'>`
         }
-        msg.innerText='Você venceu!'
-    }else{
+        msg.innerHTML=`Você venceu!<br><button onclick='newgame()'>Jogar outra vez</button>`
+    }else if(winner=='o'){
         for( i of sequence){
             document.getElementById(`div${i}`).innerHTML=`<img src='midia/red-o.png'>`
         }
-        msg.innerText='Você perdeu!'
+        msg.innerHTML=`Você perdeu!<br><button onclick='newgame()'>Jogar outra vez</button>`
+    }else if(winner=='en'){
+        msg.innerHTML=`Empate!!<br><button onclick='newgame()'>Jogar outra vez</button>`
     }
     removeEventAll()
 }
@@ -104,6 +114,7 @@ function newgame(){
         game.status[i]=''
         document.getElementById(`div${i+1}`).innerHTML=''
     }
-    msg.innerText=''
+    msg.innerHTML=''
+    addEventAll()
 }
 addEventAll()
