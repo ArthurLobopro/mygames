@@ -14,8 +14,6 @@ function lercookie(){
         let x = cook.indexOf('x',date)
         player=Number(cook.substring(7,x))
         bot = Number(cook.substring(x+1,cook.length))
-        console.log(player)
-        console.log(bot)
     }
     placar()
 }
