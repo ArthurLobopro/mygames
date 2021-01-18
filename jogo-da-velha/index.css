@@ -10,6 +10,11 @@
 }
 #placar{
     font-size: 35px;
+}
+#msg{
+    font-size: 25px;
+}
+#placar,#msg{
     font-family: 'Nunito';
     margin: auto;
     width: max-content;
@@ -30,7 +35,7 @@
 }
 .showo,.showx{
     margin: auto;
-    width: min-content;
+    width: max-content;
 }
 @font-face{
     font-family: 'Nunito';

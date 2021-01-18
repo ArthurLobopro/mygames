@@ -4,9 +4,6 @@ const game = {
         '','','',
         '','',''
     ],
-    stsClass: [
-
-    ],
 }
 function jogada(player,alerta=true) {
     if(game.status[player-1]==''){
@@ -19,6 +16,7 @@ function jogada(player,alerta=true) {
                 break
             }
         }
+        document.getElementById(`div${player}`).removeEventListener('click',function(){alert(this.id)},false)
         if(disp==true){
             bot()
             verifica()
@@ -43,7 +41,7 @@ function bot() {
     }
 }
 function draw(id,src) {
-    document.getElementById(`${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
+    document.getElementById(`div${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
 }
 function verifica() {
     const sts = game.status
@@ -69,3 +67,9 @@ function zera_status(){
         game.status[i]=''
     }
 }
+function addEventAll(){
+    for(i=0;i<9;i++){
+        document.getElementById(`div${i+1}`).addEventListener('click',function(){jogada(String(this.id)[3])},false)
+    }
+}
+addEventAll()
