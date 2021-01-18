@@ -6,9 +6,34 @@
     grid-gap: 2px;
     width: 154px;
     height: 154px;
+    margin: 10px auto;
 }
-canvas{
+#placar{
+    font-size: 35px;
+    font-family: 'Nunito';
+    margin: auto;
+    width: max-content;
+}
+.square{
     background-color: white;
     width: 50px;
     height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.show{
+    animation: show 1.5s;
+    margin: auto;
+    width: min-content;
+}
+@font-face{
+    font-family: 'Nunito';
+    src: url('fontes/Nunito-SemiBold.ttf');
+    font-weight: 600;
+    font-style: normal;
+}
+@keyframes show{
+    from{opacity: 0;}
+    to{opacity: 1;}
 }
