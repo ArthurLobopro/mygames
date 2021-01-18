@@ -11,6 +11,7 @@ function jogada(player,alerta=true) {
     if(game.status[player-1]==''){
         game.status[player-1]='x'
         draw(player,'x')
+        let have_winner = verifica()
         let disp = false
         for(i of game.status){
             if(i==''){
@@ -19,10 +20,8 @@ function jogada(player,alerta=true) {
             }
         }
         document.getElementById(`div${player}`).removeEventListener('click',jogar,false) 
-        if(disp==true){
+        if(disp==true && have_winner==false){
             bot()
-            verifica()
-        }else{
             verifica()
         }
         console.log(game.status)
@@ -74,6 +73,7 @@ function verifica() {
     if(game.status.indexOf('')==-1 && have_winner==false){
         win()
     }
+    return have_winner
 }
 let elemEvt
 function addEventAll(){
