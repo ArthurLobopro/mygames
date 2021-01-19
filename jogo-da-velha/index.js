@@ -43,6 +43,7 @@ function bot() {
 function draw(id,src) {
     document.getElementById(`div${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
 }
+// Validação de vitórias.
 function verifica() {
     const sts = game.status
     let have_winner = false
@@ -75,24 +76,7 @@ function verifica() {
     }
     return have_winner
 }
-let elemEvt
-function addEventAll(){
-    elemEvt = []
-    for(i=0;i<9;i++) {
-      let elem = document.getElementById(`div${i+1}`)
-      elem.addEventListener('click',jogar,false) 
-      elemEvt.push(elem)
-  }
-}
 
-function removeEventAll(){
-    elemEvt= []
-    for(i=0;i<9;i++) {
-        let elem = document.getElementById(`div${i+1}`)
-        elem.removeEventListener('click',jogar,false) 
-        elemEvt.push(elem)
-    }
-}
 function win(winner='en',sequence){
     if(winner=='x'){
         for( i of sequence){
@@ -117,4 +101,47 @@ function newgame(){
     msg.innerHTML=''
     addEventAll()
 }
+// Detecção de cliques
+let elemEvt
+function addEventAll(){
+    elemEvt = []
+    for(i=0;i<9;i++) {
+      let elem = document.getElementById(`div${i+1}`)
+      elem.addEventListener('click',jogar,false) 
+      elemEvt.push(elem)
+  }
+}
+
+function removeEventAll(){
+    elemEvt= []
+    for(i=0;i<9;i++) {
+        let elem = document.getElementById(`div${i+1}`)
+        elem.removeEventListener('click',jogar,false) 
+        elemEvt.push(elem)
+    }
+}
+// Cookies e Placar
+function lercookie(){
+    const cook = document.cookie
+    if(cook==''){
+        criaCookie()
+    }else{
+        let date = document.cookie.indexOf('placar')
+        let x = cook.indexOf('x',date)
+        player=Number(cook.substring(7,x))
+        bot = Number(cook.substring(x+1,cook.length))
+    }
+    placar()
+}
+function criaCookie(player=0,bot=0){
+    let date = new Date()
+    date.setMonth(date.getMonth()+1)
+    document.cookie=`placar=${player}x${bot};expires=${date};path=/;`
+    lercookie()
+}
+function placar(){
+    document.getElementById('player').innerText=player
+    document.getElementById('bot').innerText=bot
+}
+
 addEventAll()
