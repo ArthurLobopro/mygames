@@ -8,7 +8,7 @@
 </head>
 <body>
     <section>
-        <div id="placar" style="display: none;">Você <span id="player">0</span> x <span id="bot">0</span> Bot</div>
+        <div id="placar">Você <span id="player">0</span> x <span id="bot">0</span> Bot</div>
         <div id="content">
             <div class="square" id="div1" width="50" height="50"></div>
             <div class="square" id="div2" width="50" height="50"></div>
@@ -23,5 +23,22 @@
         <div id="msg"></div>
     </section>
     <script src="index.js"></script>
+    <script>
+        const body = document.body
+        body.onload = () =>{
+            const largura = window.innerWidth
+            const altura = window.innerHeight
+            body.style.height=`${altura}px`
+            body.style.width=`${largura}px`
+            lercookie()
+            addEventAll()
+        }
+        body.onresize = () =>{
+            const largura = window.innerWidth
+            const altura = window.innerHeight
+            body.style.height=`${altura}px`
+            body.style.width=`${largura}px`
+        }
+    </script>
 </body>
 </html>

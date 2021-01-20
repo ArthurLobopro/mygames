@@ -5,6 +5,8 @@ const game = {
         '','',''
     ],
 }
+let pplayer = 0
+let pbot = 0
 const msg = document.getElementById('msg')
 let jogar = () => jogada(String(event.target.id)[3])
 function jogada(player,alerta=true) {
@@ -36,6 +38,7 @@ function bot() {
     if(game.status[jbot-1]==''){
         game.status[jbot-1]='o'
         draw(jbot,'o')
+        document.getElementById(`div${jbot}`).removeEventListener('click',jogar,false) 
     }else{
         bot()
     }
@@ -82,15 +85,20 @@ function win(winner='en',sequence){
         for( i of sequence){
             document.getElementById(`div${i}`).innerHTML=`<img src='midia/red-x.png'>`
         }
+        pplayer++
+        placar()
         msg.innerHTML=`Você venceu!<br><button onclick='newgame()'>Jogar outra vez</button>`
     }else if(winner=='o'){
         for( i of sequence){
             document.getElementById(`div${i}`).innerHTML=`<img src='midia/red-o.png'>`
         }
+        pbot++
+        placar()
         msg.innerHTML=`Você perdeu!<br><button onclick='newgame()'>Jogar outra vez</button>`
     }else if(winner=='en'){
         msg.innerHTML=`Empate!!<br><button onclick='newgame()'>Jogar outra vez</button>`
     }
+    criaCookie(pplayer,pbot)
     removeEventAll()
 }
 function newgame(){
@@ -128,8 +136,8 @@ function lercookie(){
     }else{
         let date = document.cookie.indexOf('placar')
         let x = cook.indexOf('x',date)
-        player=Number(cook.substring(7,x))
-        bot = Number(cook.substring(x+1,cook.length))
+        pplayer=Number(cook.substring(7,x))
+        pbot = Number(cook.substring(x+1,cook.length))
     }
     placar()
 }
@@ -140,8 +148,6 @@ function criaCookie(player=0,bot=0){
     lercookie()
 }
 function placar(){
-    document.getElementById('player').innerText=player
-    document.getElementById('bot').innerText=bot
+    document.getElementById('player').innerText=pplayer
+    document.getElementById('bot').innerText=pbot
 }
-
-addEventAll()

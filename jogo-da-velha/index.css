@@ -7,6 +7,10 @@ section{
     width: 255px;
     box-sizing: border-box;
 }
+body{
+    margin: 25px 0 0 0;
+    padding: 0;
+}
 #content{
     display: grid;
     grid-template-columns: auto auto auto;
