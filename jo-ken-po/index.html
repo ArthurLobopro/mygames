@@ -32,15 +32,15 @@
         body.onload = () =>{
             const largura = window.innerWidth
             const altura = window.innerHeight
-            body.style.height=`${altura}px`
-            body.style.width=`${largura}px`
+            body.style.height=`calc(${altura}px - 26px)`
+            body.style.width=`calc(${largura}px - 26px)`
             lercookie()
         }
         body.onresize = () =>{
             const largura = window.innerWidth
             const altura = window.innerHeight
-            body.style.height=`${altura}px`
-            body.style.width=`${largura}px`
+            body.style.height=`calc(${altura}px - 26px)`
+            body.style.width=`calc(${largura}px - 26px)`
         }
     </script>
 </body>
