@@ -144,7 +144,7 @@ function lercookie(){
 function criaCookie(player=0,bot=0){
     let date = new Date()
     date.setMonth(date.getMonth()+1)
-    document.cookie=`placar=${player}x${bot};expires=${date};path=/;`
+    document.cookie=`placar=${player}x${bot};expires=${date};path=/jogo-da-velha/;`
     lercookie()
 }
 function placar(){
