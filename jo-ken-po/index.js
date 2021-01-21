@@ -1,10 +1,12 @@
-let player = 0
-let bot = 0
+// Variáveis Globais
 const opcoes = {
     caminho: [ 'midia/pedra.svg','midia/papel.svg','midia/tesoura.svg'],
     texto: ['JO','KEN','PO']
 }
 const content = document.getElementById('content')
+let player = 0
+let bot = 0
+// Cookies
 function lercookie(){
     const cook = document.cookie
     if(cook==''){
@@ -27,12 +29,11 @@ function placar(){
     document.getElementById('player').innerText=player
     document.getElementById('bot').innerText=bot
 }
-function randint(min,max){
-    return Math.floor(Math.random() * (max-min+1)) + min
-}
+// Funções do jogo.
 function jogada(valor){
     const jogadas = ['pedra','papel','tesoura']
     const jogador = valor
+    const randint = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
     const computador = jogadas[randint(0,2)]
     jokenpo()
     setTimeout(() => {
@@ -102,12 +103,12 @@ function resultado(jogador,computador){
             <div class='vs'>X</div>
             <div class='pc'><img src="midia/${computador}.svg"> Bot</div>
             <div class='result'><span class="msg">${msg}</span></div>
-            <button onclick='restart()'>Jogar outra vez</button>
+            <button onclick='newgame()'>Jogar outra vez</button>
         </div>
     </div>`
     placar()
 }
-function restart(){
+function newgame(){
     content.innerHTML=`
     <div id="escolha">Escolha sua jogada:</div>
     <div id="options">
