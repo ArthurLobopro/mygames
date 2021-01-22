@@ -1,3 +1,5 @@
+@import url('../public/css/button.css');
+@import url('../public/css/nunito.css');
 #content{
     width: 400px;
     margin: auto;
@@ -85,15 +87,6 @@ body{
 .circle:hover{
     background-color: #ccc;
 }
-button{
-    background-color: #0D6EFD;
-    color: white;
-    font-family: 'Nunito';
-    font-size: 20px;
-    grid-area: button;
-    border: 1px solid black;
-    border-radius: 3px;
-}
 #escolha{
     width: max-content;
     font-size: 34px;
@@ -113,12 +106,6 @@ button{
 .show,.vs,.msg{
     font-family: 'Nunito';
     font-size: 30px;
-}
-@font-face{
-    font-family: 'Nunito';
-    src: url('fontes/Nunito-SemiBold.ttf');
-    font-weight: 600;
-    font-style: normal;
 }
 @keyframes up {
     from{

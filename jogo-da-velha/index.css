@@ -1,3 +1,5 @@
+@import url('../public/css/button.css');
+@import url('../public/css/nunito.css');
 section{
     border: 1px solid gray;
     border-radius: 5px;
@@ -51,21 +53,7 @@ body{
 .showo{
     animation: showo 4s;
 }
-button{
-    background-color: green;
-    color: #eee;
-    font-family: 'Nunito';
-    font-size: 20px;
-    grid-area: button;
-    border: 1px solid black;
-    border-radius: 3px;
-}
-@font-face{
-    font-family: 'Nunito';
-    src: url('fontes/Nunito-SemiBold.ttf');
-    font-weight: 600;
-    font-style: normal;
-}
+
 @keyframes showx{
     from{opacity: 0;}
     to{opacity: 1;}
