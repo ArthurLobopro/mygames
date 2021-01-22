@@ -1,0 +1,86 @@
+#content{
+    width: 400px;
+    margin: auto;
+    flex-direction: column;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 20px 0;
+}
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 100px 50px 100px;
+    grid-template-rows: auto auto;
+}
+#jogada{
+    width: max-content;
+    font-size: 34px;
+    font-family: 'Nunito';
+    font-weight: 600;
+    margin: auto;
+}
+#escolhas{
+    width: 300px;
+    margin: 15px auto 0;
+}
+.circle{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-color: #eee;
+    border: 2px solid black;
+    cursor: pointer;
+    margin: auto;
+    font-family: 'Nunito';
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle:hover{
+    background-color: #ddd;
+}
+.circle:focus{
+    outline: none;
+}
+.number{
+    border: 1px solid gray;
+    border-radius: 3px;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.number:hover{
+    background-color: #EEE;
+}
+.rotateL{
+    transform: rotate(90deg);
+}
+.up{
+    animation: up 0.5s;
+    animation-delay: 2s;
+}
+@font-face{
+    font-family: 'Nunito';
+    src: url('fontes/Nunito-SemiBold.ttf');
+    font-weight: 600;
+    font-style: normal;
+}
+@keyframes up {
+    0%{
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}

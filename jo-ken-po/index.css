@@ -86,8 +86,8 @@ body{
     background-color: #ccc;
 }
 button{
-    background-color: green;
-    color: #eee;
+    background-color: #0D6EFD;
+    color: white;
     font-family: 'Nunito';
     font-size: 20px;
     grid-area: button;
