@@ -1,3 +1,5 @@
+@import url('../public/css/button.css');
+@import url('../public/css/nunito.css');
 #content{
     width: 400px;
     margin: auto;
@@ -5,6 +7,8 @@
     border: 1px solid gray;
     border-radius: 5px;
     padding: 20px 0;
+    height: 195px;
+    box-sizing: border-box;
 }
 .flex{
     display: flex;
@@ -14,8 +18,17 @@
 }
 .grid{
     display: grid;
-    grid-template-columns: 100px 50px 100px;
-    grid-template-rows: auto auto;
+    /* grid-template-columns: auto auto;
+    grid-template-rows: auto auto; */
+    grid-template-areas: 'txt txt' 'img img' 'show show';
+}
+.txt{
+    margin: auto;
+    font-family: 'Nunito';
+    font-size: 30px;
+}
+.img{
+    margin: auto;
 }
 #jogada{
     width: max-content;
@@ -41,6 +54,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: black;
 }
 .circle:hover{
     background-color: #ddd;
@@ -61,18 +75,23 @@
 .number:hover{
     background-color: #EEE;
 }
-.rotateL{
-    transform: rotate(90deg);
-}
 .up{
-    animation: up 0.5s;
-    animation-delay: 2s;
+    animation: up ;
 }
-@font-face{
+.dur1{
+    animation-duration: 1s;
+}
+.dur05{
+    animation-duration: 0.5s;
+}
+.show{
+    animation: show 2s;
+    margin: auto;
+    width: max-content;
+    grid-area: show;
+    animation-delay: 3s;
     font-family: 'Nunito';
-    src: url('fontes/Nunito-SemiBold.ttf');
-    font-weight: 600;
-    font-style: normal;
+    font-size: 30px;
 }
 @keyframes up {
     0%{
@@ -83,4 +102,8 @@
         opacity: 1;
         transform: translateY(0px);
     }
+}
+@keyframes show{
+    from{opacity: 0;}
+    to{opacity: 1;}
 }
