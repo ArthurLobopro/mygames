@@ -6,4 +6,7 @@ button{
     grid-area: button;
     border: 1px solid black;
     border-radius: 3px;
+    width: max-content;
+    padding: auto 10px;
+    margin: auto;
 }
