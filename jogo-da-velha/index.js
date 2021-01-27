@@ -26,7 +26,6 @@ function jogada(player,alerta=true) {
             bot()
             verifica()
         }
-        console.log(game.status)
     }else{
         (alerta==true) ? alert('Jogada inválida') : null
     }
@@ -34,7 +33,6 @@ function jogada(player,alerta=true) {
 function bot() {
     const randint = (min,max) => Math.floor(Math.random() * (max-min+1)) + min
     let jbot = randint(1,9)
-    console.log(jbot)
     if(game.status[jbot-1]==''){
         game.status[jbot-1]='o'
         draw(jbot,'o')
@@ -52,25 +50,21 @@ function verifica() {
     let have_winner = false
     for(i=0;i<7;i+=3){
         if(sts[i] == sts[i+1] && sts[i] == sts[i+2] && (sts[i]!='')){
-            console.log('victory1')
             win(sts[i],[i+1,i+2,i+3])
             have_winner=true
         }
     }
     for(i=0;i<3;i++){
         if(sts[i] == sts[i+3] && sts[i] == sts[i+6] && (sts[i]!='')){
-            console.log('victory2')
             win(sts[i],[i+1,i+4,i+7])
             have_winner=true
         }
     }
     if(sts[0] == sts[4] && sts[0] == sts[8] && (sts[0]!='')){
-        console.log('victory3')
         win(sts[0],[1,5,9])
         have_winner=true
     }
     if(sts[2] == sts[4] && sts[2] == sts[6] && (sts[2]!='')){
-        console.log('victory4')
         win(sts[2],[3,5,7])
         have_winner=true
     }
