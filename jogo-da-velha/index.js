@@ -8,6 +8,7 @@ const game = {
 let pplayer = 0
 let pbot = 0
 const msg = document.getElementById('msg')
+const randint = (min,max) => Math.floor(Math.random() * (max-min+1)) + min
 const range = (min,max,pass=1) => {
     let array = []
     for(i = min;i<max;i+=pass){
@@ -44,31 +45,19 @@ function jogada(player,alerta=true) {
 }
 const vertical = (str) =>{
     const sts = game.status
-    for(i of range(0,9)){
-        if(sts[i]==str && sts[i+3]==str && sts[i+6]==''){
-            return i+6
-        }
-        if(sts[i]==str && sts[i+3]=='' && sts[i+6]==str){
-            return i+3
-        }
-        if(sts[i]=='' && sts[i+3]==str && sts[i+6]==str){
-            return i
-        }
+    for(i of range(0,3)){
+        if(sts[i]== str && sts[i+3] == str && sts[i+6] == '' ) { return i+6 }
+        if(sts[i]== str && sts[i+3] == ''  && sts[i+6] == str) { return i+3 }
+        if(sts[i]== ''  && sts[i+3] == str && sts[i+6] == str) { return i }
     }
     return ''
 }
 const horizontal = (str) =>{
     const sts = game.status
     for(i of range(0,7,3)){
-        if(sts[i] == str && sts[i+1] == str && sts[i+2] == ''){
-            return i+2
-        }
-        if(sts[i] == str && sts[i+1] == '' && sts[i+2] == str){
-            return i+1
-        }
-        if(sts[i] == '' && sts[i+1] == str && sts[i+2] == str){
-            return i
-        }
+        if(sts[i] == str && sts[i+1] == str && sts[i+2] == '') { return i+2 }
+        if(sts[i] == str && sts[i+1] == '' && sts[i+2] == str) { return i+1 }
+        if(sts[i] == '' && sts[i+1] == str && sts[i+2] == str) { return i }
     }
     return  ''
 }
@@ -83,15 +72,13 @@ const diagonal = (str) =>{
     return ''
 }
 function bot() {
-    const randint = (min,max) => Math.floor(Math.random() * (max-min+1)) + min
-    
     let jbot = vertical('o')
-    jbot = (jbot=='') ? horizontal('o') : jbot
-    jbot = (jbot=='') ? vertical('x') : jbot
-    jbot = (jbot=='') ? diagonal('x') : jbot
-    jbot = (jbot=='') ? horizontal('x') : jbot
-    jbot = (jbot=='') ? diagonal('o') : jbot
-    jbot = (jbot=='') ? randint(0,8) : jbot
+    jbot = (jbot==='') ? horizontal('o') : jbot
+    jbot = (jbot==='') ? diagonal('o') : jbot
+    jbot = (jbot==='') ? vertical('x') : jbot
+    jbot = (jbot==='') ? diagonal('x') : jbot
+    jbot = (jbot==='') ? horizontal('x') : jbot
+    jbot = (jbot==='') ? randint(0,8) : jbot
     if(game.status[jbot]==''){
         game.status[jbot]='o'
         console.log(game.status);
