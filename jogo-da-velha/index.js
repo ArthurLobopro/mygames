@@ -8,9 +8,17 @@ const game = {
 let pplayer = 0
 let pbot = 0
 const msg = document.getElementById('msg')
-let jogar = () => jogada(String(event.target.id)[3])
+const range = (min,max,pass=1) => {
+    let array = []
+    for(i = min;i<max;i+=pass){
+        array.push(i)
+    }
+    return array
+}
+let jogar = (event) => jogada(String(event.target.id)[3])
 function jogada(player,alerta=true) {
     if(game.status[player-1]==''){
+        removeEventAll()
         game.status[player-1]='x'
         draw(player,'x')
         let have_winner = verifica()
@@ -21,22 +29,74 @@ function jogada(player,alerta=true) {
                 break
             }
         }
+        console.log(game.status);
         document.getElementById(`div${player}`).removeEventListener('click',jogar,false) 
         if(disp==true && have_winner==false){
             bot()
             verifica()
         }
+        setTimeout(() => {
+            addEventAll()
+        }, 4000)
     }else{
         (alerta==true) ? alert('Jogada inválida') : null
     }
 }
+const vertical = (str) =>{
+    const sts = game.status
+    for(i of range(0,9)){
+        if(sts[i]==str && sts[i+3]==str && sts[i+6]==''){
+            return i+6
+        }
+        if(sts[i]==str && sts[i+3]=='' && sts[i+6]==str){
+            return i+3
+        }
+        if(sts[i]=='' && sts[i+3]==str && sts[i+6]==str){
+            return i
+        }
+    }
+    return ''
+}
+const horizontal = (str) =>{
+    const sts = game.status
+    for(i of range(0,7,3)){
+        if(sts[i] == str && sts[i+1] == str && sts[i+2] == ''){
+            return i+2
+        }
+        if(sts[i] == str && sts[i+1] == '' && sts[i+2] == str){
+            return i+1
+        }
+        if(sts[i] == '' && sts[i+1] == str && sts[i+2] == str){
+            return i
+        }
+    }
+    return  ''
+}
+const diagonal = (str) =>{
+    const sts = game.status
+    if (sts[0] == str && sts[4] == str && sts[8] == '')  { return 8 }
+    if (sts[0] == str && sts[4] == ''  && sts[8] == str) { return 4 }
+    if (sts[0] == ''  && sts[4] == str && sts[8] == str) { return 0 }
+    if (sts[2] == str && sts[4] == str && sts[6] == '')  { return 6 }
+    if (sts[2] == str && sts[4] == ''  && sts[6] == str) { return 4 }
+    if (sts[2] == ''  && sts[4] == str && sts[6] == str) { return 2 }
+    return ''
+}
 function bot() {
     const randint = (min,max) => Math.floor(Math.random() * (max-min+1)) + min
-    let jbot = randint(1,9)
-    if(game.status[jbot-1]==''){
-        game.status[jbot-1]='o'
-        draw(jbot,'o')
-        document.getElementById(`div${jbot}`).removeEventListener('click',jogar,false) 
+    
+    let jbot = vertical('o')
+    jbot = (jbot=='') ? horizontal('o') : jbot
+    jbot = (jbot=='') ? vertical('x') : jbot
+    jbot = (jbot=='') ? diagonal('x') : jbot
+    jbot = (jbot=='') ? horizontal('x') : jbot
+    jbot = (jbot=='') ? diagonal('o') : jbot
+    jbot = (jbot=='') ? randint(0,8) : jbot
+    if(game.status[jbot]==''){
+        game.status[jbot]='o'
+        console.log(game.status);
+        draw(jbot+1,'o')
+        document.getElementById(`div${jbot+1}`).removeEventListener('click',jogar,false) 
     }else{
         bot()
     }
@@ -108,9 +168,11 @@ let elemEvt
 function addEventAll(){
     elemEvt = []
     for(i=0;i<9;i++) {
-      let elem = document.getElementById(`div${i+1}`)
-      elem.addEventListener('click',jogar,false) 
-      elemEvt.push(elem)
+        if (game.status[i]=='') {
+            let elem = document.getElementById(`div${i+1}`)
+            elem.addEventListener('click',jogar,false) 
+            elemEvt.push(elem)
+        }
   }
 }
 
