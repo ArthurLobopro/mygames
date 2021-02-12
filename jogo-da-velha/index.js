@@ -1,9 +1,5 @@
 const game = {
-    status: [
-        '','','',
-        '','','',
-        '','',''
-    ],
+    status: ['','','','','','','','',''],
 }
 let pplayer = 0
 let pbot = 0
@@ -16,7 +12,8 @@ const range = (min,max,pass=1) => {
     }
     return array
 }
-let jogar = (event) => jogada(String(event.target.id)[3])
+const jogar = (event) => jogada(String(event.target.id)[3])
+// Função do jogo
 function jogada(player,alerta=true) {
     if(game.status[player-1]==''){
         removeEventAll()
@@ -43,6 +40,11 @@ function jogada(player,alerta=true) {
         (alerta==true) ? alert('Jogada inválida') : null
     }
 }
+function draw(id,src) {
+    document.getElementById(`div${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
+}
+//'Inteligencia' do bot
+//Verificação vertical, verifica se há possibilidade de ganhar ou perder (dependendo da chamada) pela vertical
 const vertical = (str) =>{
     const sts = game.status
     for(i of range(0,3)){
@@ -52,6 +54,7 @@ const vertical = (str) =>{
     }
     return ''
 }
+//Verificação horizontal, verifica se há possibilidade de ganhar ou perder (dependendo da chamada) pela horizontal
 const horizontal = (str) =>{
     const sts = game.status
     for(i of range(0,7,3)){
@@ -61,6 +64,7 @@ const horizontal = (str) =>{
     }
     return  ''
 }
+//Verificação diagonal, verifica se há possibilidade de ganhar ou perder (dependendo da chamada) pela diagonal
 const diagonal = (str) =>{
     const sts = game.status
     if (sts[0] == str && sts[4] == str && sts[8] == '')  { return 8 }
@@ -78,6 +82,7 @@ function bot() {
     jbot = (jbot==='') ? vertical('x') : jbot
     jbot = (jbot==='') ? diagonal('x') : jbot
     jbot = (jbot==='') ? horizontal('x') : jbot
+    //Caso não há possibilidades nem de ganhar ou evitar a derrota, o bot faz uma jogada aleatória.
     jbot = (jbot==='') ? randint(0,8) : jbot
     if(game.status[jbot]==''){
         game.status[jbot]='o'
@@ -88,19 +93,18 @@ function bot() {
         bot()
     }
 }
-function draw(id,src) {
-    document.getElementById(`div${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
-}
 // Validação de vitórias.
 function verifica() {
     const sts = game.status
     let have_winner = false
+    //Verifica se há algum vencedor na horizontal
     for(i=0;i<7;i+=3){
         if(sts[i] == sts[i+1] && sts[i] == sts[i+2] && (sts[i]!='')){
             win(sts[i],[i+1,i+2,i+3])
             have_winner=true
         }
     }
+    
     for(i=0;i<3;i++){
         if(sts[i] == sts[i+3] && sts[i] == sts[i+6] && (sts[i]!='')){
             win(sts[i],[i+1,i+4,i+7])
@@ -150,6 +154,7 @@ function newgame(){
     msg.innerHTML=''
     addEventAll()
 }
+
 // Detecção de cliques
 let elemEvt
 function addEventAll(){
@@ -171,6 +176,7 @@ function removeEventAll(){
         elemEvt.push(elem)
     }
 }
+
 // Cookies e Placar
 function lercookie(){
     const cook = document.cookie

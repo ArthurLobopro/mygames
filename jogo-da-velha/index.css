@@ -1,5 +1,11 @@
 @import url('../public/css/button.css');
 @import url('../public/css/nunito.css');
+
+/*Tags*/
+body{
+    margin: 25px 0 0 0;
+    padding: 0;
+}
 section{
     border: 1px solid gray;
     border-radius: 5px;
@@ -9,10 +15,8 @@ section{
     width: 255px;
     box-sizing: border-box;
 }
-body{
-    margin: 25px 0 0 0;
-    padding: 0;
-}
+
+/*Ids*/
 #content{
     display: grid;
     grid-template-columns: auto auto auto;
@@ -23,9 +27,7 @@ body{
     height: 154px;
     margin: 10px auto;
 }
-#placar{
-    font-size: 35px;
-}
+#placar{ font-size: 35px; }
 #msg{
     font-size: 25px;
     text-align: center;
@@ -35,6 +37,8 @@ body{
     margin: auto;
     width: max-content;
 }
+
+/*Classes*/
 .square{
     background-color: white;
     width: 50px;
@@ -47,19 +51,16 @@ body{
     margin: auto;
     width: max-content;
 }
-.showx{
-    animation: showx 1.5s;
-}
-.showo{
-    animation: showo 4s;
-}
+.showx{ animation: showx 1.5s; }
+.showo{ animation: showo 4s; }
 
+/*Animações*/
 @keyframes showx{
-    from{opacity: 0;}
-    to{opacity: 1;}
+    from{ opacity: 0; }
+    to{ opacity: 1; }
 }
 @keyframes showo{
-    0%{opacity: 0;}
-    50%{opacity: 0;}
-    100%{opacity: 1;}
+    0%{ opacity: 0; }
+    50%{ opacity: 0; }
+    100%{ opacity: 1; }
 }
