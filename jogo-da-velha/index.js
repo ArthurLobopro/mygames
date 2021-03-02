@@ -1,5 +1,69 @@
+// Classes dificuldade
+class Easy{
+    randint = (min,max) => Math.floor(Math.random() * (max-min+1)) + min
+    play(game){
+        let jbot = randint(0,8)
+        if(game.status[jbot]==''){
+            return jbot
+            // game.status[jbot]='o'
+            // console.log(game.status);
+            // draw(jbot+1,'o')
+            // document.getElementById(`div${jbot+1}`).removeEventListener('click',jogar,false) 
+        }else{
+            this.play(game)
+        }
+    }
+}
+class Normal extends Easy{
+    // "Inteligencia" do bot, faz verificações em todos os angulos
+    vertical = (str,game) =>{
+        const sts = game.status
+        for(i of range(0,3)){
+            if(sts[i]== str && sts[i+3] == str && sts[i+6] == '' ) { return i+6 }
+            if(sts[i]== str && sts[i+3] == ''  && sts[i+6] == str) { return i+3 }
+            if(sts[i]== ''  && sts[i+3] == str && sts[i+6] == str) { return i }
+        }
+        return ''
+    }
+    horizontal = (str,game) =>{
+        const sts = game.status
+        for(i of range(0,7,3)){
+            if(sts[i] == str && sts[i+1] == str && sts[i+2] == '') { return i+2 }
+            if(sts[i] == str && sts[i+1] == '' && sts[i+2] == str) { return i+1 }
+            if(sts[i] == '' && sts[i+1] == str && sts[i+2] == str) { return i }
+        }
+        return  ''
+    }
+    diagonal = (str,game) =>{
+        const sts = game.status
+        if (sts[0] == str && sts[4] == str && sts[8] == '')  { return 8 }
+        if (sts[0] == str && sts[4] == ''  && sts[8] == str) { return 4 }
+        if (sts[0] == ''  && sts[4] == str && sts[8] == str) { return 0 }
+        if (sts[2] == str && sts[4] == str && sts[6] == '')  { return 6 }
+        if (sts[2] == str && sts[4] == ''  && sts[6] == str) { return 4 }
+        if (sts[2] == ''  && sts[4] == str && sts[6] == str) { return 2 }
+        return ''
+    }
+    play(game){
+        let jbot = vertical('o',game)
+        jbot = (jbot==='') ? horizontal('o',game) : jbot
+        jbot = (jbot==='') ? diagonal('o',game) : jbot
+        jbot = (jbot==='') ? vertical('x',game) : jbot
+        jbot = (jbot==='') ? diagonal('x',game) : jbot
+        jbot = (jbot==='') ? horizontal('x',game) : jbot
+        //Caso não há possibilidades nem de ganhar ou evitar a derrota, o bot faz uma jogada aleatória.
+        jbot = (jbot==='') ? randint(0,8) : jbot
+        return jbot
+    }
+}3
+// Variáveis Globais
+const get = id => document.getElementById(id)
 const game = {
     status: ['','','','','','','','',''],
+    placar: {
+        player: 0,
+        bot: 0
+    }
 }
 let pplayer = 0
 let pbot = 0
@@ -12,9 +76,9 @@ const range = (min,max,pass=1) => {
     }
     return array
 }
-const jogar = (event) => jogada(String(event.target.id)[3])
+const jogar = (event) => jogadaPlayer(String(event.target.id)[3])
 // Função do jogo
-function jogada(player,alerta=true) {
+function jogadaPlayer(player,alerta=true) {
     if(game.status[player-1]==''){
         removeEventAll()
         game.status[player-1]='x'
@@ -30,7 +94,7 @@ function jogada(player,alerta=true) {
         console.log(game.status);
         document.getElementById(`div${player}`).removeEventListener('click',jogar,false) 
         if(disp==true && have_winner==false){
-            bot()
+            jogadaBot()
             verifica()
         }
         setTimeout(() => {
@@ -43,54 +107,16 @@ function jogada(player,alerta=true) {
 function draw(id,src) {
     document.getElementById(`div${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
 }
-//'Inteligencia' do bot
-//Verificação vertical, verifica se há possibilidade de ganhar ou perder (dependendo da chamada) pela vertical
-const vertical = (str) =>{
-    const sts = game.status
-    for(i of range(0,3)){
-        if(sts[i]== str && sts[i+3] == str && sts[i+6] == '' ) { return i+6 }
-        if(sts[i]== str && sts[i+3] == ''  && sts[i+6] == str) { return i+3 }
-        if(sts[i]== ''  && sts[i+3] == str && sts[i+6] == str) { return i }
-    }
-    return ''
-}
-//Verificação horizontal, verifica se há possibilidade de ganhar ou perder (dependendo da chamada) pela horizontal
-const horizontal = (str) =>{
-    const sts = game.status
-    for(i of range(0,7,3)){
-        if(sts[i] == str && sts[i+1] == str && sts[i+2] == '') { return i+2 }
-        if(sts[i] == str && sts[i+1] == '' && sts[i+2] == str) { return i+1 }
-        if(sts[i] == '' && sts[i+1] == str && sts[i+2] == str) { return i }
-    }
-    return  ''
-}
-//Verificação diagonal, verifica se há possibilidade de ganhar ou perder (dependendo da chamada) pela diagonal
-const diagonal = (str) =>{
-    const sts = game.status
-    if (sts[0] == str && sts[4] == str && sts[8] == '')  { return 8 }
-    if (sts[0] == str && sts[4] == ''  && sts[8] == str) { return 4 }
-    if (sts[0] == ''  && sts[4] == str && sts[8] == str) { return 0 }
-    if (sts[2] == str && sts[4] == str && sts[6] == '')  { return 6 }
-    if (sts[2] == str && sts[4] == ''  && sts[6] == str) { return 4 }
-    if (sts[2] == ''  && sts[4] == str && sts[6] == str) { return 2 }
-    return ''
-}
-function bot() {
-    let jbot = vertical('o')
-    jbot = (jbot==='') ? horizontal('o') : jbot
-    jbot = (jbot==='') ? diagonal('o') : jbot
-    jbot = (jbot==='') ? vertical('x') : jbot
-    jbot = (jbot==='') ? diagonal('x') : jbot
-    jbot = (jbot==='') ? horizontal('x') : jbot
-    //Caso não há possibilidades nem de ganhar ou evitar a derrota, o bot faz uma jogada aleatória.
-    jbot = (jbot==='') ? randint(0,8) : jbot
+function jogadaBot() {
+    let dificulty  = new Normal()
+    let jbot = dificulty.play(game)
     if(game.status[jbot]==''){
         game.status[jbot]='o'
         console.log(game.status);
         draw(jbot+1,'o')
         document.getElementById(`div${jbot+1}`).removeEventListener('click',jogar,false) 
     }else{
-        bot()
+        jogadaBot()
     }
 }
 // Validação de vitórias.
@@ -127,76 +153,66 @@ function verifica() {
 
 function win(winner='en',sequence){
     if(winner=='x'){
-        for( i of sequence){
+        for(let i of sequence){
             document.getElementById(`div${i}`).innerHTML=`<img src='midia/red-x.png'>`
         }
-        pplayer++
+        game.placar.player++
         placar()
         msg.innerHTML=`Você venceu!<br><button onclick='newgame()'>Jogar outra vez</button>`
     }else if(winner=='o'){
-        for( i of sequence){
+        for(let i of sequence){
             document.getElementById(`div${i}`).innerHTML=`<img src='midia/red-o.png'>`
         }
-        pbot++
+        game.placar.bot++
         placar()
         msg.innerHTML=`Você perdeu!<br><button onclick='newgame()'>Jogar outra vez</button>`
     }else if(winner=='en'){
         msg.innerHTML=`Empate!!<br><button onclick='newgame()'>Jogar outra vez</button>`
     }
-    criaCookie(pplayer,pbot)
+    criaPlacar()
     removeEventAll()
 }
 function newgame(){
-    for(i=0;i<9;i++){
+    for(let i in game.status){
         game.status[i]=''
-        document.getElementById(`div${i+1}`).innerHTML=''
+        document.getElementById(`div${Number(i)+1}`).innerHTML=''
     }
     msg.innerHTML=''
     addEventAll()
 }
 
 // Detecção de cliques
-let elemEvt
-function addEventAll(){
-    elemEvt = []
-    for(i=0;i<9;i++) {
+const addEventAll = () => {
+    for(let i in game.status){
         if (game.status[i]=='') {
-            let elem = document.getElementById(`div${i+1}`)
-            elem.addEventListener('click',jogar,false) 
-            elemEvt.push(elem)
+            i = Number(i)
+            get(`div${i+1}`).onclick = jogar
         }
-  }
-}
-
-function removeEventAll(){
-    elemEvt= []
-    for(i=0;i<9;i++) {
-        let elem = document.getElementById(`div${i+1}`)
-        elem.removeEventListener('click',jogar,false) 
-        elemEvt.push(elem)
     }
 }
-
-// Cookies e Placar
-function lercookie(){
-    const cook = document.cookie
-    if(cook==''){
-        criaCookie()
+const removeEventAll = () => {
+    for(let i in game.status){
+        i = Number(i)
+        get(`div${i+1}`).onclick = null
+    }
+}
+// Salvar placar com local storage
+function lerPlacar(){
+    if(localStorage.bot == undefined && localStorage.player == undefined){
+        criaPlacar()
     }else{
-        let date = document.cookie.indexOf('placar')
-        let x = cook.indexOf('x',date)
-        pplayer=Number(cook.substring(7,x))
-        pbot = Number(cook.substring(x+1,cook.length))
+        let player,bot 
+        ({player, bot} = localStorage)
+        game.placar.player = player
+        game.placar.bot = bot
+        placar()
     }
-    placar()
 }
-function criaCookie(player=0,bot=0){
-    let date = new Date()
-    date.setMonth(date.getMonth()+1)
-    document.cookie=`placar=${player}x${bot};expires=${date};path=./;`
-    lercookie()
+function criaPlacar(){
+    localStorage.player = game.placar.player
+    localStorage.bot = game.placar.bot
 }
 function placar(){
-    document.getElementById('player').innerText=pplayer
-    document.getElementById('bot').innerText=pbot
+    document.getElementById('player').innerText= game.placar.player
+    document.getElementById('bot').innerText= game.placar.bot
 }

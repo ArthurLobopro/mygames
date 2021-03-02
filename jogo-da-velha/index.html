@@ -9,17 +9,25 @@
 </head>
 <body>
     <section>
+        <img src="" alt="">
         <div id="placar">Você <span id="player">0</span> x <span id="bot">0</span> Bot</div>
         <div id="content">
-            <div class="square" id="div1" width="50" height="50"></div>
-            <div class="square" id="div2" width="50" height="50"></div>
-            <div class="square" id="div3" width="50" height="50"></div>
-            <div class="square" id="div4" width="50" height="50"></div>
-            <div class="square" id="div5" width="50" height="50"></div>
-            <div class="square" id="div6" width="50" height="50"></div>
-            <div class="square" id="div7" width="50" height="50"></div>
-            <div class="square" id="div8" width="50" height="50"></div>
-            <div class="square" id="div9" width="50" height="50"></div>
+            <div id="game">
+                <div class="square" id="div1" width="50" height="50"></div>
+                <div class="square" id="div2" width="50" height="50"></div>
+                <div class="square" id="div3" width="50" height="50"></div>
+                <div class="square" id="div4" width="50" height="50"></div>
+                <div class="square" id="div5" width="50" height="50"></div>
+                <div class="square" id="div6" width="50" height="50"></div>
+                <div class="square" id="div7" width="50" height="50"></div>
+                <div class="square" id="div8" width="50" height="50"></div>
+                <div class="square" id="div9" width="50" height="50"></div>
+            </div>
+            <div id="config" style="display: none;">
+                Dificuldade: <br>
+                <input type="radio" name="dificuldade" value="easy"> Fácil  <br>
+                <input type="radio" name="dificuldade" value="medium"> Médio 
+            </div>
         </div>
         <div id="msg"></div>
     </section>
@@ -31,7 +39,7 @@
             const altura = window.innerHeight
             body.style.height=`calc(${altura}px - 26px)`
             body.style.width=`calc(${largura}px - 26px)`
-            lercookie()
+            lerPlacar()
             addEventAll()
         }
         body.onresize = () =>{
