@@ -5,10 +5,6 @@ class Easy{
         let jbot = randint(0,8)
         if(game.status[jbot]==''){
             return jbot
-            // game.status[jbot]='o'
-            // console.log(game.status);
-            // draw(jbot+1,'o')
-            // document.getElementById(`div${jbot+1}`).removeEventListener('click',jogar,false) 
         }else{
             this.play(game)
         }
@@ -45,17 +41,17 @@ class Normal extends Easy{
         return ''
     }
     play(game){
-        let jbot = vertical('o',game)
-        jbot = (jbot==='') ? horizontal('o',game) : jbot
-        jbot = (jbot==='') ? diagonal('o',game) : jbot
-        jbot = (jbot==='') ? vertical('x',game) : jbot
-        jbot = (jbot==='') ? diagonal('x',game) : jbot
-        jbot = (jbot==='') ? horizontal('x',game) : jbot
+        let jbot = this.vertical('o',game)
+        jbot = (jbot==='') ? this.horizontal('o',game) : jbot
+        jbot = (jbot==='') ? this.diagonal('o',game) : jbot
+        jbot = (jbot==='') ? this.vertical('x',game) : jbot
+        jbot = (jbot==='') ? this.diagonal('x',game) : jbot
+        jbot = (jbot==='') ? this.horizontal('x',game) : jbot
         //Caso não há possibilidades nem de ganhar ou evitar a derrota, o bot faz uma jogada aleatória.
         jbot = (jbot==='') ? randint(0,8) : jbot
         return jbot
     }
-}3
+}
 // Variáveis Globais
 const get = id => document.getElementById(id)
 const game = {
@@ -63,10 +59,12 @@ const game = {
     placar: {
         player: 0,
         bot: 0
+    },
+    difficulty: undefined,
+    getDifficulty: (difficulty) => {
+        return difficulty == 'facil' ? new Easy() : new Normal()
     }
 }
-let pplayer = 0
-let pbot = 0
 const msg = document.getElementById('msg')
 const randint = (min,max) => Math.floor(Math.random() * (max-min+1)) + min
 const range = (min,max,pass=1) => {
@@ -76,7 +74,8 @@ const range = (min,max,pass=1) => {
     }
     return array
 }
-const jogar = (event) => jogadaPlayer(String(event.target.id)[3])
+const jogar = event => jogadaPlayer(String(event.target.id)[3])
+let bot
 // Função do jogo
 function jogadaPlayer(player,alerta=true) {
     if(game.status[player-1]==''){
@@ -85,7 +84,7 @@ function jogadaPlayer(player,alerta=true) {
         draw(player,'x')
         let have_winner = verifica()
         let disp = false
-        for(i of game.status){
+        for(let i of game.status){
             if(i==''){
                 disp=true
                 break
@@ -108,8 +107,7 @@ function draw(id,src) {
     document.getElementById(`div${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
 }
 function jogadaBot() {
-    let dificulty  = new Normal()
-    let jbot = dificulty.play(game)
+    let jbot = bot.play(game)
     if(game.status[jbot]==''){
         game.status[jbot]='o'
         console.log(game.status);
@@ -130,7 +128,6 @@ function verifica() {
             have_winner=true
         }
     }
-    
     for(i=0;i<3;i++){
         if(sts[i] == sts[i+3] && sts[i] == sts[i+6] && (sts[i]!='')){
             win(sts[i],[i+1,i+4,i+7])
@@ -158,17 +155,18 @@ function win(winner='en',sequence){
         }
         game.placar.player++
         placar()
-        msg.innerHTML=`Você venceu!<br><button onclick='newgame()'>Jogar outra vez</button>`
+        msg.innerHTML=`Você venceu!<br>`
     }else if(winner=='o'){
         for(let i of sequence){
             document.getElementById(`div${i}`).innerHTML=`<img src='midia/red-o.png'>`
         }
         game.placar.bot++
         placar()
-        msg.innerHTML=`Você perdeu!<br><button onclick='newgame()'>Jogar outra vez</button>`
+        msg.innerHTML=`Você perdeu!<br>`
     }else if(winner=='en'){
-        msg.innerHTML=`Empate!!<br><button onclick='newgame()'>Jogar outra vez</button>`
+        msg.innerHTML=`Empate!!<br>`
     }
+    get('submit-button').classList.toggle('invisible')
     criaPlacar()
     removeEventAll()
 }
@@ -178,6 +176,7 @@ function newgame(){
         document.getElementById(`div${Number(i)+1}`).innerHTML=''
     }
     msg.innerHTML=''
+    get('submit-button').classList.toggle('invisible')
     addEventAll()
 }
 
@@ -215,4 +214,33 @@ function criaPlacar(){
 function placar(){
     document.getElementById('player').innerText= game.placar.player
     document.getElementById('bot').innerText= game.placar.bot
+}
+// Salvar dificuldade
+function lerDificuldade(){
+    if(localStorage.difficulty == undefined){
+        criarDificuldade('normal')
+    }else{
+        let difficulty
+        ( { difficulty } = localStorage)
+        game.difficulty = difficulty
+        bot = game.getDifficulty(difficulty)
+        get(difficulty).checked = true
+    }
+}
+function criarDificuldade(dificuldade){
+    localStorage.difficulty = dificuldade
+    game.difficulty = dificuldade
+    lerDificuldade()
+}
+// Detecção de eventos 
+const img_config = document.querySelector('section > img')
+img_config.onclick = () => {
+    get('game').classList.toggle('invisible')
+    get('config').classList.toggle('invisible')
+}
+const difficulty_config = document.querySelectorAll('#config input')
+for(let i of difficulty_config){
+    i.onclick = event => {
+        criarDificuldade(event.target.value)
+    }
 }

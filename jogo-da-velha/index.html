@@ -8,9 +8,10 @@
     <title>Jogo da velha</title>
 </head>
 <body>
+    <div id="placar">Você <span id="player">0</span> x <span id="bot">0</span> Bot</div>
     <section>
-        <img src="" alt="">
-        <div id="placar">Você <span id="player">0</span> x <span id="bot">0</span> Bot</div>
+        <img src="midia/config.png" width="20px" alt="">
+        
         <div id="content">
             <div id="game">
                 <div class="square" id="div1" width="50" height="50"></div>
@@ -23,13 +24,14 @@
                 <div class="square" id="div8" width="50" height="50"></div>
                 <div class="square" id="div9" width="50" height="50"></div>
             </div>
-            <div id="config" style="display: none;">
+            <div id="config" class="invisible">
                 Dificuldade: <br>
-                <input type="radio" name="dificuldade" value="easy"> Fácil  <br>
-                <input type="radio" name="dificuldade" value="medium"> Médio 
+                <input type="radio" name="dificuldade" value="facil" id="facil"> Fácil  <br>
+                <input type="radio" name="dificuldade" value="normal" id="normal"> Médio 
             </div>
         </div>
         <div id="msg"></div>
+        <button onclick='newgame()' id="submit-button" class="invisible">Jogar outra vez</button>
     </section>
     <script src="index.js"></script>
     <script>
@@ -40,6 +42,7 @@
             body.style.height=`calc(${altura}px - 26px)`
             body.style.width=`calc(${largura}px - 26px)`
             lerPlacar()
+            lerDificuldade()
             addEventAll()
         }
         body.onresize = () =>{

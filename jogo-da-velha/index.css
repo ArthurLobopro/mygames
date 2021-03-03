@@ -14,13 +14,20 @@ section{
     margin: auto;
     width: 255px;
     box-sizing: border-box;
+    text-align: center;
 }
-
+section > img{
+    float: right;
+    margin-bottom: 10px;
+}
+section > img:hover{
+    background-color: #f1f3f4;
+}
 /*Ids*/
 #content{
     width: 154px;
     height: 154px;
-    margin: 10px auto;
+    margin: 20px auto;
 }
 #game{
     display: grid;
@@ -28,12 +35,14 @@ section{
     grid-template-rows: auto auto auto;
     background-color: black;
     grid-gap: 2px;
+    user-select: none;
 }
 #config{
     font-family: 'Nunito';
     font-size: 14px;
     margin: auto;
     width: max-content;
+    text-align: initial;
 }
 #placar{ font-size: 35px; }
 #msg{
@@ -47,6 +56,9 @@ section{
 }
 
 /*Classes*/
+.invisible{
+    display: none !important;
+}
 .square{
     background-color: white;
     width: 50px;
