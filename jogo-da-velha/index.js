@@ -14,7 +14,7 @@ class Normal extends Easy{
     // "Inteligencia" do bot, faz verificações em todos os angulos
     vertical = (str,game) =>{
         const sts = game.status
-        for(i of range(0,3)){
+        for( let i of range(0,3)){
             if(sts[i]== str && sts[i+3] == str && sts[i+6] == '' ) { return i+6 }
             if(sts[i]== str && sts[i+3] == ''  && sts[i+6] == str) { return i+3 }
             if(sts[i]== ''  && sts[i+3] == str && sts[i+6] == str) { return i }
@@ -23,7 +23,7 @@ class Normal extends Easy{
     }
     horizontal = (str,game) =>{
         const sts = game.status
-        for(i of range(0,7,3)){
+        for( let i of range(0,7,3)){
             if(sts[i] == str && sts[i+1] == str && sts[i+2] == '') { return i+2 }
             if(sts[i] == str && sts[i+1] == '' && sts[i+2] == str) { return i+1 }
             if(sts[i] == '' && sts[i+1] == str && sts[i+2] == str) { return i }
@@ -65,11 +65,11 @@ const game = {
         return difficulty == 'facil' ? new Easy() : new Normal()
     }
 }
-const msg = document.getElementById('msg')
+const msg = get('msg')
 const randint = (min,max) => Math.floor(Math.random() * (max-min+1)) + min
 const range = (min,max,pass=1) => {
     let array = []
-    for(i = min;i<max;i+=pass){
+    for(let i = min;i<max;i+=pass){
         array.push(i)
     }
     return array
@@ -91,7 +91,7 @@ function jogadaPlayer(player,alerta=true) {
             }
         }
         console.log(game.status);
-        document.getElementById(`div${player}`).removeEventListener('click',jogar,false) 
+        get(`div${player}`).onclick = ""
         if(disp==true && have_winner==false){
             jogadaBot()
             verifica()
@@ -104,7 +104,7 @@ function jogadaPlayer(player,alerta=true) {
     }
 }
 function draw(id,src) {
-    document.getElementById(`div${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
+    get(`div${id}`).innerHTML=`<img src='midia/${src}.png' class='show${src}'>`
 }
 function jogadaBot() {
     let jbot = bot.play(game)
@@ -112,7 +112,7 @@ function jogadaBot() {
         game.status[jbot]='o'
         console.log(game.status);
         draw(jbot+1,'o')
-        document.getElementById(`div${jbot+1}`).removeEventListener('click',jogar,false) 
+        get(`div${jbot+1}`).removeEventListener('click',jogar,false) 
     }else{
         jogadaBot()
     }
@@ -122,13 +122,13 @@ function verifica() {
     const sts = game.status
     let have_winner = false
     //Verifica se há algum vencedor na horizontal
-    for(i=0;i<7;i+=3){
+    for(let i=0;i<7;i+=3){
         if(sts[i] == sts[i+1] && sts[i] == sts[i+2] && (sts[i]!='')){
             win(sts[i],[i+1,i+2,i+3])
             have_winner=true
         }
     }
-    for(i=0;i<3;i++){
+    for(let i=0;i<3;i++){
         if(sts[i] == sts[i+3] && sts[i] == sts[i+6] && (sts[i]!='')){
             win(sts[i],[i+1,i+4,i+7])
             have_winner=true
@@ -166,21 +166,21 @@ function win(winner='en',sequence){
     }else if(winner=='en'){
         msg.innerHTML=`Empate!!<br>`
     }
-    get('submit-button').classList.toggle('invisible')
+    get('new-game-button').classList.toggle('invisible')
     criaPlacar()
     removeEventAll()
 }
-function newgame(){
+const newgame= () => {
     for(let i in game.status){
         game.status[i]=''
         document.getElementById(`div${Number(i)+1}`).innerHTML=''
     }
     msg.innerHTML=''
-    get('submit-button').classList.toggle('invisible')
+    get('new-game-button').classList.toggle('invisible')
     addEventAll()
 }
 
-// Detecção de cliques
+// Detecção de eventos
 const addEventAll = () => {
     for(let i in game.status){
         if (game.status[i]=='') {
@@ -195,21 +195,29 @@ const removeEventAll = () => {
         get(`div${i+1}`).onclick = null
     }
 }
+const body = document.body
+    body.onload = () =>{
+        lerPlacar()
+        lerDificuldade()
+        addEventAll()
+    }
 // Salvar placar com local storage
 function lerPlacar(){
-    if(localStorage.bot == undefined && localStorage.player == undefined){
+    if(localStorage["velha"] == undefined){
         criaPlacar()
     }else{
+        const data = JSON.parse(localStorage["velha"])
         let player,bot 
-        ({player, bot} = localStorage)
+        ({player, bot} = data)
         game.placar.player = player
         game.placar.bot = bot
         placar()
     }
 }
 function criaPlacar(){
-    localStorage.player = game.placar.player
-    localStorage.bot = game.placar.bot
+    let placar = game.placar
+    let json = JSON.stringify(placar)
+    localStorage["velha"] = json
 }
 function placar(){
     document.getElementById('player').innerText= game.placar.player
@@ -242,5 +250,16 @@ const difficulty_config = document.querySelectorAll('#config input')
 for(let i of difficulty_config){
     i.onclick = event => {
         criarDificuldade(event.target.value)
+    }
+}
+const new_game_button = get("new-game-button")
+new_game_button.onclick = newgame
+const reset = get("reset")
+reset.onclick = () => {
+    if(confirm('Você realmente deseja resetar o placar?')){
+        game.placar.player = 0
+        game.placar.bot = 0
+        criaPlacar()
+        placar()
     }
 }
