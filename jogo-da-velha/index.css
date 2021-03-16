@@ -1,24 +1,29 @@
 @import url('../public/css/button.css');
 @import url('../public/css/nunito.css');
 
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 /*Tags*/
 body{
-    margin: 25px 0 0 0;
-    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
 }
 section{
     border: 1px solid gray;
     border-radius: 5px;
     padding: 10px;
-    width: max-content;
-    margin: auto;
     width: 255px;
-    box-sizing: border-box;
+    height: 255px;
     text-align: center;
 }
 section > img{
     float: right;
-    margin-bottom: 10px;
 }
 section > img:hover{
     background-color: #f1f3f4;
@@ -36,6 +41,7 @@ section > img:hover{
     background-color: black;
     grid-gap: 2px;
     user-select: none;
+    margin: 40px auto;
 }
 #config{
     font-family: 'Nunito';
@@ -51,7 +57,6 @@ section > img:hover{
 }
 #placar,#msg{
     font-family: 'Nunito';
-    margin: auto;
     width: max-content;
 }
 

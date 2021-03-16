@@ -27,30 +27,13 @@
             <div id="config" class="invisible">
                 Dificuldade: <br>
                 <input type="radio" name="dificuldade" value="facil" id="facil"> Fácil  <br>
-                <input type="radio" name="dificuldade" value="normal" id="normal"> Médio 
+                <input type="radio" name="dificuldade" value="normal" id="normal"> Médio <br>
+                <input type="button" id="reset" value="Resetar Placar">
             </div>
         </div>
         <div id="msg"></div>
-        <button onclick='newgame()' id="submit-button" class="invisible">Jogar outra vez</button>
+        <button id="new-game-button" class="invisible">Jogar outra vez</button>
     </section>
-    <script src="index.js"></script>
-    <script>
-        const body = document.body
-        body.onload = () =>{
-            const largura = window.innerWidth
-            const altura = window.innerHeight
-            body.style.height=`calc(${altura}px - 26px)`
-            body.style.width=`calc(${largura}px - 26px)`
-            lerPlacar()
-            lerDificuldade()
-            addEventAll()
-        }
-        body.onresize = () =>{
-            const largura = window.innerWidth
-            const altura = window.innerHeight
-            body.style.height=`calc(${altura}px - 26px)`
-            body.style.width=`calc(${largura}px - 26px)`
-        }
-    </script>
+    <script src="index.js" type="module"></script>
 </body>
 </html>
