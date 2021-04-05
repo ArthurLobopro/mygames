@@ -19,7 +19,8 @@ section{
     border-radius: 5px;
     padding: 10px;
     width: 255px;
-    height: 255px;
+    min-height: 255px;
+    height: max-content;
     text-align: center;
 }
 section > img{
@@ -50,14 +51,16 @@ section > img:hover{
     width: max-content;
     text-align: initial;
 }
-#placar{ font-size: 35px; }
+#placar{ 
+    font-size: 35px; 
+    width: max-content;
+}
 #msg{
     font-size: 25px;
     text-align: center;
 }
 #placar,#msg{
     font-family: 'Nunito';
-    width: max-content;
 }
 
 /*Classes*/
