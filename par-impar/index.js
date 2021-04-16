@@ -10,32 +10,35 @@ const game = {
 }
 const circle = document.querySelectorAll('.circle')
 const content = document.getElementById('content')
+const get = id => document.getElementById(id)
 const option = (e) => showNumbers(e.target.innerText)
 const setnum = (e) => selectNumbers(Number(e.target.innerText))
 circle[0].addEventListener('click',option,false)
 circle[1].addEventListener('click',option,false)
+const button = document.querySelector('button')
+    button.onclick = newgame
+
+const hideAll = () => {
+    for(let e of document.querySelectorAll("#content > div")){
+        e.style.display="none"
+    }
+}
 
 function showNumbers(escolha){
     game.player.option=escolha
     game.bot.option= (escolha=='Par')? 'Ímpar' : 'Par'
-    document.getElementById('escolhas').innerHTML=`
-    <div class="number">0</div>
-    <div class="number">1</div>
-    <div class="number">2</div>
-    <div class="number">3</div>
-    <div class="number">4</div>
-    <div class="number">5</div>`
+    hideAll()
+    get("fase2").style.display=""
     const number = document.querySelectorAll('.number')
-    for(i of number){
-        i.addEventListener('click',setnum,false)
+    for(let e of number){
+        e.onclick = setnum
     }
 }
+
 function selectNumbers(num){
     const randint = (min,max) => Math.floor(Math.random() * (max-min+1)) + min
     game.player.number=num
     game.bot.number=randint(0,5)
-    content.classList.remove('flex')
-    content.classList.add('grid')
     function img(value,index,time) {
         setTimeout(() => {
             document.querySelectorAll('.img')[index].innerHTML=`<div class='up dur05'><img src="midia/${value}dedos.png" style='transform: ${(index==0)? '': 'rotateY(180deg) '} rotateZ(90deg) ;'></div>`
@@ -50,10 +53,6 @@ function selectNumbers(num){
     }
     const win = () => 'Você venceu!'
     const lose = () => 'Você perdeu!'
-
-    const imgString = (value,index) =>{
-        return `<div class='up dur05'><img src="midia/${value}dedos.png" style='transform: ${(index==0)? '': 'rotateY(180deg) '} rotateZ(90deg) ;'></div>`
-    }
     
     let soma = game.player.number + game.bot.number
     function verifica(){
@@ -64,13 +63,11 @@ function selectNumbers(num){
         }
     }
     
-    content.innerHTML=`
-    <div class='txt' ></div>
-    <div class='txt' ></div>
-    <div class='img'></div>
-    <div class='img'></div>
-    <div class='show hidden' style='animation-delay: 3s'>${verifica()}</div>
-    <button onclick='newgame()' class='hidden'>Jogar outra vez</button>`
+    hideAll()
+    get("fase3").style.display=""
+    
+    get("result").innerHTML = verifica()
+
     txt(game.player.option,0,1000)
     txt(game.bot.option,1,2000)
     img(game.player.number,0,2700)
@@ -79,9 +76,16 @@ function selectNumbers(num){
         document.querySelector('.show').classList.remove('hidden')
     }, 3000);
     setTimeout(() => {
-        document.querySelector('button').classList.remove('hidden')
+        button.classList.remove('hidden')
+        get("result").classList.remove('hidden')
     }, 4000);
 }
+
 function newgame(){
-    document.location.reload()
+    const elements = document.querySelectorAll(".txt, .img")
+    for(let e of elements){ e.innerHTML="" }
+    button.classList.add('hidden')
+    get("result").classList.add('hidden')
+    hideAll()
+    get("fase1").style.display=""
 }

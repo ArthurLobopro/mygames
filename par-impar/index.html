@@ -10,13 +10,42 @@
 <body>
     <section>
         <div id="content" class="flex">
-            <div>
+            <div id="fase1"  >
                 <div id="jogada">Escolha sua jogada:</div>
                 <div id="escolhas" class="flex">
                     <div class="circle">Par</div>
                     <div class="circle">Ímpar</div>
                 </div>
             </div>
+            <div id="fase2" style="display: none;">
+                <span class="fs30">Escolha sua jogada:</span>
+                <div class="numbers">
+                    <div class="number">0</div>
+                    <div class="number">1</div>
+                    <div class="number">2</div>
+                    <div class="number">3</div>
+                    <div class="number">4</div>
+                    <div class="number">5</div>
+                </div>
+            </div>
+            <div id="fase3" style="display: none;">
+                
+                <div class="teste">
+                    <div>
+                        <div class='txt' ></div>
+                    <div class='img'></div>
+                    </div>
+                    <div>
+                        <div class='txt' ></div> 
+                        <div class='img'></div>
+                    </div>
+                    <div id="result" class="hidden"></div>
+                </div>
+                <div class='show hidden' style='animation-delay: 3s'>
+                    <button class="hidden">Jogar outra vez</button>
+                </div>
+            </div>
+            
         </div>
     </section>
     <script src="index.js"></script>

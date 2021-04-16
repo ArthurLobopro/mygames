@@ -4,17 +4,29 @@
     width: 400px;
     margin: auto;
     flex-direction: column;
+    align-items: center;
     border: 1px solid gray;
     border-radius: 5px;
     padding: 20px 0;
     height: 220px;
     box-sizing: border-box;
+    font-family: "Nunito";
 }
-.flex{
+.flex , .numbers{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
+}
+.numbers{
+    width: 300px;
+    margin:0 auto;
+}
+.teste{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 250px;
 }
 .grid{
     display: grid;
@@ -33,13 +45,24 @@
 #jogada{
     width: max-content;
     font-size: 34px;
-    font-family: 'Nunito';
     font-weight: 600;
     margin: auto;
 }
 #escolhas{
     width: 300px;
     margin: 15px auto 0;
+}
+#result{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+}
+#fase2{
+    text-align: center;
+}
+.fs30{
+    font-size: 30px;
 }
 .circle{
     width: 70px;
@@ -49,7 +72,6 @@
     border: 2px solid black;
     cursor: pointer;
     margin: auto;
-    font-family: 'Nunito';
     font-size: 20px;
     display: flex;
     justify-content: center;
